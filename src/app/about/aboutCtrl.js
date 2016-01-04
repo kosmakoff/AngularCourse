@@ -2,8 +2,6 @@
 
 angular.module('awesome-app.about').
 
-controller('AboutCtrl', function ($scope, Employees) {
+controller('AboutCtrl', function ($scope) {
     
-    $scope.employees = Employees.query();
-
 });
