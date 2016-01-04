@@ -1,41 +1,26 @@
-<div class="app-employees">
-    <h2>Here you have some employees from service:</h2>
-    <table class="table">
-        <thead>
-            <th>
-                ID
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                Age
-            </th>
-            <th>
-                Grade
-            </th>
-            <th>
-                Job
-            </th>
-        </thead>
-        <tbody>
-            <tr ng-repeat="employee in employees">
-                <td>
-                    {{ employee.id }}
-                </td>
-                <td>
-                    {{ employee.name }}
-                </td>
-                <td>
-                    {{ employee.age }}
-                </td>
-                <td>
-                    {{ employee.grade}}
-                </td>
-                <td>
-                    {{ employee.job }}
-                </td>                    
-            </tr>
-        </tbody>
-    </table>
+<div class="app-employees row">
+    <div class="col-md-9">
+        <uib-tabset>
+            <uib-tab heading="One">
+                <tags-input ng-model="members" placeholder="Name, specialization or grade" key-property="id" display-property="id"
+                    template="employees/employeeTag.tpl.html" replace-spaces-with-dashes="false"
+                    add-from-autocomplete-only="true">
+                    <auto-complete source="searchMembers($query)" min-length="2" template="employees/employeeAutocomplete.tpl.html">
+                    </auto-complete>
+                </tags-input>
+                <p>Model: {{members | json}}</p>
+            </uib-tab>
+            <uib-tab heading="Two">
+                <div class="input-group">
+                    <span class="input-group-addon" id="filter">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Filter" aria-describedby="filter">
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+    <div class="col-md-3">
+        <awesome-teams teams="teams" />
+    </div>
 </div>

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('awesome-app.employees', ['ui.router']).
+angular.module('awesome-app.employees', ['ui.router', 'ui.bootstrap', 'ngTagsInput']).
 
 config(function config($stateProvider) {
 

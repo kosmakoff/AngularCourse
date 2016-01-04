@@ -1,0 +1,19 @@
+<div class="input-group">
+    <input type="text" class="form-control" placeholder="Add New Team" ng-model="newTeamName" />
+    <span class="input-group-btn">
+        <button class="btn btn-default" type="button" ng-click="addNewTeam(newTeamName)" ng-disabled="!isTeamNameValid(newTeamName)">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+    </span>
+</div>
+
+<uib-accordion>
+    <uib-accordion-group ng-repeat="team in teams" heading="{{team.teamName}}">
+        <div ng-show="!team.members.length">
+            No members added for team {{team.teamName}} so far
+        </div>        
+        <ul ng-hide="!team.members.length">
+            <li ng-repeat="member in team.members">{{member.name}}</li>
+        </ul>
+    </uib-accordion-group>
+</uib-accordion>

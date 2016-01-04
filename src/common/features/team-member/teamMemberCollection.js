@@ -9,9 +9,9 @@ factory('TeamMemberCollection', function (AbstractEntity, TeamMemberModel) {
          * Initialize collection
          * @param {String} collectionName
          */
-        initialize: function (collectionName) {
-            this.collectionName = collectionName;
-            this.models = [];
+        initialize: function (teamName) {
+            this.teamName = teamName;
+            this.members = [];
         },
         /**
          * Add member
@@ -20,7 +20,7 @@ factory('TeamMemberCollection', function (AbstractEntity, TeamMemberModel) {
          */
         addMember: function (member) {
             if (member instanceof TeamMemberModel) {
-                this.models.push(member);
+                this.members.push(member);
             }
             return this;
         }
