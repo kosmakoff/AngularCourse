@@ -4,6 +4,7 @@ angular.module('awesome-app', [
     'ui.router',
     'ui.bootstrap',
     'ngSanitize',
+    'ngResource',
     'templates-app',
     'awesome-app.common',
     'awesome-app.home',
