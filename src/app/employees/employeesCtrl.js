@@ -2,15 +2,11 @@
 
 angular.module('awesome-app.employees').
 
-controller('EmployeesCtrl', function ($scope, Employees) {
+controller('EmployeesCtrl', function ($scope, $state, Employees) {
     $scope.teams = [];
     
-    $scope.members = [];
-    
-    $scope.searchMembers = function(query) {
-        return Employees.query(function(employee){
-            var regex = new RegExp(query, 'i');
-            return regex.test(employee.name) || regex.test(employee.job) || regex.test(employee.grade);
-        });
-    };
+    $scope.$on('teamSelected', function(event, team) {
+        console.log('If you see it then it is working', team);
+        $state.go("employees.item", {teamName: team.teamNameNormalized});
+    });
 });

@@ -1,0 +1,20 @@
+<uib-tabset>
+    <uib-tab heading="One">
+        <tags-input ng-model="members" placeholder="Name, specialization or grade" key-property="id" display-property="id"
+            template="employees/employeeTag.tpl.html" replace-spaces-with-dashes="false"
+            add-from-autocomplete-only="true" min-length="1">
+            <auto-complete source="searchMembers($query)" min-length="2" template="employees/employeeAutocomplete.tpl.html">
+            </auto-complete>
+        </tags-input>
+        <p>Model: {{members | json}}</p>
+        <button ng-click="updateTeam()" class="btn btn-default">Refresh</button>
+    </uib-tab>
+    <uib-tab heading="Two">
+        <div class="input-group">
+            <span class="input-group-addon" id="filter">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            </span>
+            <input type="text" class="form-control" placeholder="Filter" aria-describedby="filter">
+        </div>
+    </uib-tab>
+</uib-tabset>

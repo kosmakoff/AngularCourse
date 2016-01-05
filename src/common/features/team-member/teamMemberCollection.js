@@ -3,6 +3,9 @@
 angular.module('awesome-app.common.features.team-member').
 
 factory('TeamMemberCollection', function (AbstractEntity, TeamMemberModel) {
+    var normalize = function(str) {
+        return str.toLowerCase().replace(/\s+/g, '-');
+    };
 
     var TeamMemberCollection = AbstractEntity.extend({
         /**
@@ -11,6 +14,7 @@ factory('TeamMemberCollection', function (AbstractEntity, TeamMemberModel) {
          */
         initialize: function (teamName) {
             this.teamName = teamName;
+            this.teamNameNormalized = normalize(teamName);
             this.members = [];
         },
         /**

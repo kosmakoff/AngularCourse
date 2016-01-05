@@ -7,8 +7,16 @@
     </span>
 </div>
 
-<uib-accordion>
-    <uib-accordion-group ng-repeat="team in teams" heading="{{team.teamName}}">
+<!--<uib-accordion>
+    <uib-accordion-group
+        ng-repeat="team in teams track by team.teamNameNormalized"
+        is-open="team.isOpen">
+        <uib-accordion-heading>
+           <h4 class="panel-title clearfix" ng-click="setTeamOpen(team)">
+               <span class="pull-left">{{team.teamName}}</span>
+               <span class="pull-right">{{team.members.length}}</span>
+           </h4>
+        </uib-accordion-heading>
         <div ng-show="!team.members.length">
             No members added for team {{team.teamName}} so far
         </div>        
@@ -16,4 +24,29 @@
             <li ng-repeat="member in team.members">{{member.name}}</li>
         </ul>
     </uib-accordion-group>
-</uib-accordion>
+</uib-accordion>-->
+
+<!-- Implement our own accordion here. Maybe try to refactor to directive later -->
+
+<div ng-hide="!!teams.length">
+    Add team above.
+</div>
+
+<div class="panel-group" ng-show="!!teams.length">
+    <div class="panel panel-default" ng-repeat="team in teams track by team.teamNameNormalized">
+        <div class="panel-heading">
+            <h4 class="panel-title clearfix" ng-click="setTeamOpen(team)">
+                <span class="pull-left">{{team.teamName}}</span>
+                <span class="pull-right">{{team.members.length}}</span>
+            </h4>
+        </div>
+        <div uib-collapse="openTeam != team">
+            <div ng-show="!team.members.length">
+                No members added for team {{team.teamName}} so far
+            </div>        
+            <ul ng-hide="!team.members.length">
+                <li ng-repeat="member in team.members">{{member.name}}</li>
+            </ul>
+        </div>
+    </div>
+</div>
