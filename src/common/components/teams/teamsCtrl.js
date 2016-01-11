@@ -2,7 +2,7 @@
 
 angular.module('awesome-app.common.components.teams').
 
-controller('TeamsCtrl', function($scope, TeamMemberModel, TeamMemberCollection) {
+controller('TeamsCtrl', function($scope, $rootScope, TeamMemberModel, TeamMemberCollection) {
     $scope.newTeamName = '';
     $scope.openTeam = null;
     
@@ -26,4 +26,22 @@ controller('TeamsCtrl', function($scope, TeamMemberModel, TeamMemberCollection) 
             $scope.$emit('teamSelected', team);
         }
     };
+    
+    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+        // logic
+        console.log('State changed from ' , fromState, ' to ', toState, ' with ', toParams);
+        
+        if (toState.name == "employees.item") {
+            var teamName = toParams.teamName;
+            var teamsToOpen = $scope.teams.filter(function (team) {
+                return team.teamNameNormalized === teamName;
+            });
+            
+            if (teamsToOpen.length < 1) {
+                return;
+            }
+            
+            $scope.openTeam = teamsToOpen[0];
+        }
+    });
 });

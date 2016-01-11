@@ -8,11 +8,21 @@ config(function config($stateProvider) {
         .state('employees', {
             url: '^/employees',
             controller: 'EmployeesCtrl',
-            templateUrl: 'employees/employees.tpl.html'
+            templateUrl: 'employees/employees.tpl.html',
+            resolve: {
+                $title: function () {
+                    return 'Teams';
+                }
+            }
         })
         .state('employees.item', {
-            url: '/{teamName}',
+            url: '/{teamNameNormalized}',
             controller: 'EmployeesTeamCtrl',
-            templateUrl: 'employees/employeesTeam.tpl.html'
+            templateUrl: 'employees/employeesTeam.tpl.html',
+            resolve: {
+                $title: function() {
+                    return 'Team employees';
+                }
+            }
         });
 });

@@ -2,6 +2,7 @@
 
 angular.module('awesome-app', [
     'ui.router',
+    'ui.router.title',
     'ngSanitize',
     'templates-app',
     'awesome-app.common',

@@ -8,6 +8,11 @@ config(function config($stateProvider) {
         .state('home', {
             url: '^/home',
             controller: 'HomeCtrl',
-            templateUrl: 'home/home.tpl.html'
+            templateUrl: 'home/home.tpl.html',
+            resolve: {
+                $title: function() {
+                    return 'Home';
+                }
+            }
         });
 });

@@ -2,18 +2,21 @@
 
 angular.module('awesome-app.employees').
 
-controller('EmployeesTeamCtrl', function ($scope, $state, Employees, TeamMemberModel) {
-    var teamNameNormalized = $state.params.teamName;
+controller('EmployeesTeamCtrl', function ($scope, $rootScope, $state, Employees, TeamMemberModel) {
+    var teamNameNormalized = $state.params.teamNameNormalized;
     var teams = $scope.$parent.teams.filter(function(team) {
         return team.teamNameNormalized === teamNameNormalized;
     });
     
     if (!teams.length) {
-        console.log("Could not find team '" + teamNameNormalized + "'");
+        console.log('Could not find team \'' + teamNameNormalized + '\'');
+        $state.go('employees');
         return;
     }
     
     var team = teams[0];
+    $scope.team = team;
+    
     $scope.members = team.members.slice(0);
     
     $scope.searchMembers = function(query) {

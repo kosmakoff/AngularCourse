@@ -8,6 +8,11 @@ config(function config($stateProvider) {
         .state('about', {
             url: '^/about',
             controller: 'AboutCtrl',
-            templateUrl: 'about/about.tpl.html'
+            templateUrl: 'about/about.tpl.html',
+            resolve: {
+                $title: function() {
+                    return 'About';
+                }
+            }
         });
 });
