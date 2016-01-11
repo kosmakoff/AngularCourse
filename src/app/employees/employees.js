@@ -20,8 +20,11 @@ config(function config($stateProvider) {
             controller: 'EmployeesTeamCtrl',
             templateUrl: 'employees/employeesTeam.tpl.html',
             resolve: {
-                $title: function() {
-                    return 'Team employees';
+                $title: function ($stateParams, Teams) {
+                    var teamNameNormalized = $stateParams.teamNameNormalized;
+                    var team = Teams.getTeamByNormalizedName(teamNameNormalized);
+                    
+                    return team ? 'Team ' + team.teamName + ' employees' : 'Team employees';
                 }
             }
         });
