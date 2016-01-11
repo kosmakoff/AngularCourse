@@ -7,27 +7,6 @@
     </span>
 </div>
 
-<!--<uib-accordion>
-    <uib-accordion-group
-        ng-repeat="team in teams track by team.teamNameNormalized"
-        is-open="team.isOpen">
-        <uib-accordion-heading>
-           <h4 class="panel-title clearfix" ng-click="setTeamOpen(team)">
-               <span class="pull-left">{{team.teamName}}</span>
-               <span class="pull-right">{{team.members.length}}</span>
-           </h4>
-        </uib-accordion-heading>
-        <div ng-show="!team.members.length">
-            No members added for team {{team.teamName}} so far
-        </div>        
-        <ul ng-hide="!team.members.length">
-            <li ng-repeat="member in team.members">{{member.name}}</li>
-        </ul>
-    </uib-accordion-group>
-</uib-accordion>-->
-
-<!-- Implement our own accordion here. Maybe try to refactor to directive later -->
-
 <div ng-hide="!!teams.length">
     Add team above.
 </div>
@@ -45,7 +24,11 @@
                 No members added for team {{team.teamName}} so far
             </div>        
             <ul ng-hide="!team.members.length">
-                <li ng-repeat="member in team.members">{{member.name}}</li>
+                <li ng-repeat="member in team.members">
+                    <span data-toggle="tooltip" tooltip-placement="bottom" uib-tooltip-template="'../common/components/teams/employee.tpl.html'">
+                        {{member.name}}
+                    </span>
+                </li>
             </ul>
         </div>
     </div>

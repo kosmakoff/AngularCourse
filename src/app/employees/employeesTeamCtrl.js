@@ -3,6 +3,38 @@
 angular.module('awesome-app.employees').
 
 controller('EmployeesTeamCtrl', function ($scope, $rootScope, $state, Employees, Teams, TeamMemberModel) {
+    
+    console.log("EmployeesTeamCtrl init");
+    
+    var _filter = "";
+    
+    $scope.search = {
+        itemsPerPage: 10,
+        filter: function (newValue) {
+            if (arguments.length > 0) {
+                // setter
+                _filter = newValue;
+                
+                if (_filter.trim().length < 3) {
+                    $scope.filteredMembers = [];
+                    return;
+                }
+                
+                $scope.searchMembers(_filter).then(function (employees) {
+                    $scope.search.filteredMembers = employees;
+                    $scope.search.totalItems = employees.length;
+                    $scope.search.currentPage = 1;
+                });
+                
+            } else {
+                // getter;
+                return _filter;
+            }
+        },
+        
+        filteredMembers: []
+    };
+    
     var teamNameNormalized = $state.params.teamNameNormalized;
     var team = Teams.getTeamByNormalizedName(teamNameNormalized);
     

@@ -5,7 +5,7 @@ angular.module('awesome-app.common.services.employees', [ ]).
 factory('Employees', function($http) {
     var url = 'https://raw.githubusercontent.com/javascript-awesome/angular-911/master/datasources/staff.json';
     
-    var jsonPromise = $http.get(url/*, {cache: true}*/).then(function(response){
+    var jsonPromise = $http.get(url, {cache: true}).then(function(response){
         return response.data;
     });
     

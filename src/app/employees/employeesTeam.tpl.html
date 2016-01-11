@@ -9,15 +9,42 @@
             <auto-complete source="searchMembers($query)" min-length="2" template="employees/employeeAutocomplete.tpl.html">
             </auto-complete>
         </tags-input>
-        <p>Model: {{members | json}}</p>
-        <button ng-click="updateTeam()" class="btn btn-default">Refresh</button>
+        <button ng-click="updateTeam()" class="btn btn-default" ng-disabled="!members.length">Refresh</button>
     </uib-tab>
     <uib-tab heading="Two">
         <div class="input-group">
             <span class="input-group-addon" id="filter">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
             </span>
-            <input type="text" class="form-control" placeholder="Filter" aria-describedby="filter">
+            <input type="text" class="form-control" placeholder="Filter" aria-describedby="filter" ng-model="search.filter" ng-model-options="{getterSetter: true}" />
+        </div>
+        <p ng-bind="search.filter()"></p>
+        <div ng-show="search.filter().trim().length < 3">
+            Please input at least 3 characters to search field
+        </div>
+        <div ng-show="search.filter().trim().length >= 3 && search.filteredMembers.length === 0">
+            Nothing to show
+        </div>
+        <div ng-show="search.filter().trim().length >= 3 && search.filteredMembers.length > 0">
+            <p>Current page: {{search.currentPage}}</p>
+            <p>Total items: {{search.totalItems}}</p>
+            <uib-pagination total-items="search.totalItems" ng-model="search.currentPage" items-per-page="search.itemsPerPage" force-ellipses="true"></uib-pagination>
+            <table class="table table-hover">
+                <thead>
+                    <th>Name</th>
+                    <th>Job Title</th>
+                    <th>Age</th>
+                    <th>Grade</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="member in search.filteredMembers | slice:(search.currentPage - 1)*search.itemsPerPage:search.currentPage*search.itemsPerPage">
+                        <td>{{member.name}}</td>
+                        <td>{{member.job}}</td>
+                        <td>{{member.age}}</td>
+                        <td>{{member.grade}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </uib-tab>
 </uib-tabset>
