@@ -38,7 +38,7 @@ module.exports = function(grunt) {
                     '<%=bowerDir%>/bootstrap/dist/js/bootstrap.js',
                     '<%=bowerDir%>/angular-ui-router/release/angular-ui-router.js',
                     '<%=bowerDir%>/angular-ui-router-title/angular-ui-router-title.js',
-                    // '<%=bowerDir%>/angular-resource/angular-resource.js',
+                    '<%=bowerDir%>/angular-resource/angular-resource.js',
                     '<%=bowerDir%>/angular-bootstrap/ui-bootstrap-tpls.js',
                     '<%=bowerDir%>/ng-tags-input/ng-tags-input.js'
                 ],
@@ -393,33 +393,50 @@ module.exports = function(grunt) {
     /**
      * Http server for development
      */
-    grunt.loadNpmTasks('grunt-http-server');
+//     grunt.loadNpmTasks('grunt-http-server');
+//     grunt.extendConfig({
+//         'http-server': {
+//             dev: {
+//                 root: './build',
+//                 port: 8080,
+//                 host: "localhost",
+//                 cache: 0,
+//                 showDir : true,
+//                 autoIndex: true,
+//                 // server default file extension
+//                 ext: "html",
+//                 // run in parallel with other tasks
+//                 runInBackground: true
+//             }
+//         }
+//     });
+// 
+//     grunt.extendConfig({
+//         'http-server': {
+//             prod: _.extend({}, grunt.config.get('http-server.dev'), {
+//                 runInBackground: false
+//             })
+//         }
+//     });
+
+    grunt.loadNpmTasks('grunt-nodemon');
     grunt.extendConfig({
-        'http-server': {
+        nodemon: {
             dev: {
-                root: './build',
-                port: 8080,
-                host: "localhost",
-                cache: 0,
-                showDir : true,
-                autoIndex: true,
-                // server default file extension
-                ext: "html",
-                // run in parallel with other tasks
-                runInBackground: true
+                script: 'server.js'
             }
         }
     });
-
+    
+    grunt.loadNpmTasks('grunt-concurrent');
     grunt.extendConfig({
-        'http-server': {
-            prod: _.extend({}, grunt.config.get('http-server.dev'), {
-                runInBackground: false
-            })
+        concurrent: {
+            options: {
+                logConcurrentOutput: true
+            },
+            tasks: ['nodemon', 'watch']
         }
     });
-
-
 
     grunt.registerMultiTask('pack', 'Pack index.html with css and js', function () {
         var jsFiles = [],
@@ -472,12 +489,15 @@ module.exports = function(grunt) {
         'build', 'ngAnnotate', 'concat', 'uglify', 'cssmin', 'clean:compile', 'pack:compile'
     ]);
 
+    // grunt.registerTask('up', [
+    //     'build', 'http-server:dev', 'watch'
+    // ]);
+    
     grunt.registerTask('up', [
-        'build', 'http-server:dev', 'watch'
+        'build', 'concurrent'
     ]);
 
     grunt.registerTask('up:compile', [
         'compile', 'http-server:prod'
     ]);
-
 };

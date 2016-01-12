@@ -28,9 +28,6 @@ controller('TeamsCtrl', function($scope, $rootScope, TeamMemberModel, TeamMember
     };
     
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-        // logic
-        console.log('State changed from ' , fromState, ' to ', toState, ' with ', toParams);
-        
         if (toState.name == "employees.item") {
             var teamName = toParams.teamName;
             var teamsToOpen = $scope.teams.filter(function (team) {

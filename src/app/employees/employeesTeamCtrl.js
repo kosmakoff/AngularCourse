@@ -2,36 +2,12 @@
 
 angular.module('awesome-app.employees').
 
-controller('EmployeesTeamCtrl', function ($scope, $rootScope, $state, Employees, Teams, TeamMemberModel) {
-    
-    console.log("EmployeesTeamCtrl init");
-    
-    var _filter = "";
-    
+controller('EmployeesTeamCtrl', function ($scope, $rootScope, $state, $q, Employees, Teams, TeamMemberModel) {
     $scope.search = {
-        itemsPerPage: 10,
-        filter: function (newValue) {
-            if (arguments.length > 0) {
-                // setter
-                _filter = newValue;
-                
-                if (_filter.trim().length < 3) {
-                    $scope.filteredMembers = [];
-                    return;
-                }
-                
-                $scope.searchMembers(_filter).then(function (employees) {
-                    $scope.search.filteredMembers = employees;
-                    $scope.search.totalItems = employees.length;
-                    $scope.search.currentPage = 1;
-                });
-                
-            } else {
-                // getter;
-                return _filter;
-            }
-        },
-        
+        currentPage: 1,
+        pageSize: 10,
+        totalCount: null,
+        filter: '',
         filteredMembers: []
     };
     
@@ -39,7 +15,7 @@ controller('EmployeesTeamCtrl', function ($scope, $rootScope, $state, Employees,
     var team = Teams.getTeamByNormalizedName(teamNameNormalized);
     
     if (!team) {
-        console.log('Could not find team \'' + teamNameNormalized + '\'');
+        // team not found, redirect to root
         $state.go('employees');
         return;
     }
@@ -48,11 +24,22 @@ controller('EmployeesTeamCtrl', function ($scope, $rootScope, $state, Employees,
     
     $scope.members = team.members.slice(0);
     
-    $scope.searchMembers = function(query) {
-        return Employees.query(function(employee){
-            var regex = new RegExp(query, 'i');
-            return regex.test(employee.name) || regex.test(employee.job) || regex.test(employee.grade);
+    $scope.searchMembers = function (query, skip, take) {
+        return Employees.query({q: query, skip: skip, take: take}).$promise;
+    };
+    
+    $scope.searchMembersSimple = function (query) {
+        var deferred = $q.defer();
+        
+        var promise = $scope.searchMembers(query);
+        
+        promise.then(function (data) {
+            deferred.resolve(data.employees);
+        }, function (error) {
+            deferred.reject(error);
         });
+        
+        return deferred.promise;
     };
     
     $scope.updateTeam = function() {
@@ -62,5 +49,25 @@ controller('EmployeesTeamCtrl', function ($scope, $rootScope, $state, Employees,
             var memberModel = new TeamMemberModel(member);
             team.addMember(memberModel);
         }
+    };
+    
+    $scope.doSearch = function (resetPage) {
+        // initiate the new search
+        if ($scope.search.filter.trim().length < 3) {
+            $scope.search.filteredMembers = [];
+            return;
+        }
+
+        if (resetPage) {
+            $scope.search.currentPage = 1;
+        }
+
+        var skip = ($scope.search.currentPage - 1) * $scope.search.pageSize;
+        var take = $scope.search.pageSize;
+
+        $scope.searchMembers($scope.search.filter, skip, take).then(function (data) {
+            $scope.search.filteredMembers = data.employees;
+            $scope.search.totalCount = data.totalCount;
+        });
     };
 });

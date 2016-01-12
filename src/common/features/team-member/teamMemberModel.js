@@ -10,7 +10,7 @@ factory('TeamMemberModel', function (AbstractEntity) {
          * @param {String} name
          */
         initialize: function (memberObject) {
-            this.id = memberObject.id;
+            this._id = memberObject._id;
             this.name = memberObject.name;
             this.job = memberObject.job;
             this.grade = memberObject.grade;
