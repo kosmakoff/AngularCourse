@@ -1,0 +1,7 @@
+<tags-input ng-model="members" placeholder="Name, specialization or grade" key-property="id" display-property="id"
+    template="employees/employeeTag.tpl.html" replace-spaces-with-dashes="false"
+    add-from-autocomplete-only="true" min-length="1">
+    <auto-complete source="searchMembers($query)" min-length="2" template="employees/employeeAutocomplete.tpl.html">
+    </auto-complete>
+</tags-input>
+<button ng-click="updateTeam()" class="btn btn-default" ng-disabled="!members.length">Refresh</button>
