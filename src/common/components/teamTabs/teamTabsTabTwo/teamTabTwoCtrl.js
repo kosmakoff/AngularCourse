@@ -3,6 +3,8 @@
 angular.module('awesome-app.common.components.teamTabs').
 
 controller('TeamTabTwoCtrl', function ($scope, EmployeesSearch) {
+    $scope.selectedEmployeeId = null;
+    
     $scope.search = {
         currentPage: 1,
         pageSize: 10,
@@ -12,6 +14,9 @@ controller('TeamTabTwoCtrl', function ($scope, EmployeesSearch) {
     };
     
     $scope.doSearch = function (resetPage) {
+        // reset the selected employee ID
+        $scope.selectedEmployeeId = null;
+        
         // initiate the new search
         if ($scope.search.filter.trim().length < 3) {
             $scope.search.filteredMembers = [];
@@ -29,5 +34,9 @@ controller('TeamTabTwoCtrl', function ($scope, EmployeesSearch) {
             $scope.search.filteredMembers = data.employees;
             $scope.search.totalCount = data.totalCount;
         });
+    };
+    
+    $scope.selectEmployee = function (employee) {
+        $scope.selectedEmployeeId = employee._id;
     };
 });
