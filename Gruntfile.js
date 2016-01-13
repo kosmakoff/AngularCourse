@@ -442,7 +442,7 @@ module.exports = function(grunt) {
         var jsFiles = [],
             cssFiles = [],
             buildDirRE = new RegExp('^(' + grunt.config('buildDir') + ')\/', 'g');
-
+            
         this.data.scripts.forEach(function (mask) {
             if (/^(http:\/\/|https:\/\/|\/\/)/.test(mask)) {
                 jsFiles.push(mask);
@@ -467,7 +467,7 @@ module.exports = function(grunt) {
         cssFiles = cssFiles.map(function (file) {
             return file.replace(buildDirRE, '');
         });
-
+        
         grunt.file.copy(grunt.config('frontend.src.dir') + '/index.html', this.data.dir + '/index.html', {
             process: function (contents, path) {
                 return grunt.template.process(contents, {

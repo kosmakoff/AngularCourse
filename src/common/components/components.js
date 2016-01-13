@@ -6,5 +6,6 @@ angular.module('awesome-app.common.components', [
     'awesome-app.common.components.version',
     
     // my components
-    'awesome-app.common.components.teams'
+    'awesome-app.common.components.teams',
+    'awesome-app.common.components.teamTabs'
 ]);

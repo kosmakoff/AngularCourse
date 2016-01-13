@@ -12,7 +12,7 @@
 </div>
 <div ng-show="search.filter.trim().length >= 3 && search.filteredMembers.length > 0">
     <uib-pagination total-items="search.totalCount" ng-model="search.currentPage" items-per-page="search.pageSize" force-ellipses="true" ng-change="doSearch(false)"></uib-pagination>
-    <table class="table table-hover">
+    <table class="table">
         <thead>
             <th>Name</th>
             <th>Job Title</th>
@@ -27,10 +27,10 @@
                 <td>{{member.grade}}</td>
             </tr>
             <tr ng-repeat-end>
-                <td colspan="4">
-                    <uib-collapse>
+                <td colspan="4" class="no-padding">
+                    <div uib-collapse="false">
                         
-                    </uib-collapse>
+                    </div>
                 </td>
             </tr>
         </tbody>

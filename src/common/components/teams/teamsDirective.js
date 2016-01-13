@@ -6,7 +6,6 @@ angular.module('awesome-app.common.components.teams')
 
     return {
         restrict: 'E',
-        transclude: true,
         scope: {
             teams: "="
         },
