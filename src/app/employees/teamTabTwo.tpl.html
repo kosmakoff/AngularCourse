@@ -2,7 +2,7 @@
     <span class="input-group-addon" id="filter">
         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
     </span>
-    <input type="text" class="form-control" placeholder="Filter" aria-describedby="filter" ng-model="search.filter" ng-change="doSearch(true)" />
+    <input type="text" class="form-control" placeholder="Filter" aria-describedby="filter" ng-model="search.filter" ng-change="doSearch(true)" ng-model-options="{debounce: 300}" />
 </div>
 <div ng-show="search.filter.trim().length < 3">
     Please input at least 3 characters to search field
