@@ -37,6 +37,8 @@ controller('TeamTabTwoCtrl', function ($scope, EmployeesSearch) {
     };
     
     $scope.selectEmployee = function (employee) {
-        $scope.selectedEmployeeId = employee._id;
+        $scope.selectedEmployeeId = $scope.selectedEmployeeId === employee._id
+            ? null
+            : employee._id;
     };
 });

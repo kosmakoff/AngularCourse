@@ -15,4 +15,12 @@ angular.module('awesome-app', [
 ]).
 config(['$urlRouterProvider', function($urlRouterProvider) {
     $urlRouterProvider.otherwise('/home');
-}]);
+}])
+
+.controller('AlertController', function ($scope) {
+    $scope.showAlert = true;
+    
+    $scope.closeAlert = function () {
+        $scope.showAlert = false;
+    };
+});

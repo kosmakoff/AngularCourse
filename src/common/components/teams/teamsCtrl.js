@@ -2,7 +2,7 @@
 
 angular.module('awesome-app.common.components.teams').
 
-controller('TeamsCtrl', function($scope, $rootScope, TeamMemberModel, TeamMemberCollection) {
+controller('TeamsCtrl', function($scope, $rootScope, $window, TeamMemberModel, TeamMemberCollection) {
     $scope.newTeamName = '';
     $scope.openTeam = null;
     
@@ -19,8 +19,20 @@ controller('TeamsCtrl', function($scope, $rootScope, TeamMemberModel, TeamMember
         $scope.setTeamOpen(newTeam);
     };
     
+    $scope.removeTeam = function (team) {
+        if (!$window.confirm('Did you really mean to delete team ' + team.teamName + '?')) {
+            return;
+        }
+        
+        var index = $scope.teams.indexOf(team);
+        $scope.teams.splice(index, 1);
+        
+        var firstTeam = $scope.teams[0];
+        $scope.setTeamOpen(firstTeam);
+    };
+    
     $scope.setTeamOpen = function(team) {
-        if ($scope.openTeam != team) {
+        if ($scope.openTeam !== team) {
             $scope.openTeam = team;
             // emit event
             $scope.$emit('teamSelected', team);
@@ -28,17 +40,23 @@ controller('TeamsCtrl', function($scope, $rootScope, TeamMemberModel, TeamMember
     };
     
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-        if (toState.name == "employees.item") {
-            var teamName = toParams.teamName;
-            var teamsToOpen = $scope.teams.filter(function (team) {
-                return team.teamNameNormalized === teamName;
-            });
-            
-            if (teamsToOpen.length < 1) {
-                return;
-            }
-            
-            $scope.openTeam = teamsToOpen[0];
+        switch (toState.name) {
+            case "employees.item":
+                var teamName = toParams.teamName;
+                var teamsToOpen = $scope.teams.filter(function (team) {
+                    return team.teamNameNormalized === teamName;
+                });
+
+                if (teamsToOpen.length < 1) {
+                    return;
+                }
+
+                $scope.openTeam = teamsToOpen[0];
+                break;
+
+            case "employees":
+                $scope.openTeam = null;
+                break;
         }
     });
 });

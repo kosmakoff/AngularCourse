@@ -34,7 +34,12 @@
     </li>
 </awesome-header>
 
-<div ui-view class="container"></div>
+<div class="container">
+    <div ng-controller="AlertController" ng-show="showAlert">
+        <uib-alert close="closeAlert()">Attention, crappy styling everywhere :(</uib-alert>
+    </div>
+    <ui-view></ui-view>
+</div>
 
 <awesome-footer>
     <li><a href="//angular.codeschool.com" target="_blank">AngularJS CodeSchool</a></li>

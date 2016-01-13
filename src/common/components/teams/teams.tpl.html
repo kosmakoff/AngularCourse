@@ -15,19 +15,27 @@
     <div class="panel panel-default" ng-repeat="team in teams track by team.teamNameNormalized">
         <div class="panel-heading">
             <h4 class="panel-title clearfix" ng-click="setTeamOpen(team)">
-                <span class="pull-left">{{team.teamName}}</span>
+                <span class="pull-left">{{team.teamName}}&nbsp;</span>
                 <span class="pull-right badge">{{team.members.length}}</span>
+                <a href="" ng-show="openTeam === team" title="Remove team" ng-click="removeTeam(team)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
             </h4>
         </div>
-        <div uib-collapse="openTeam != team">
+        <div uib-collapse="openTeam !== team">
             <div ng-show="!team.members.length">
                 No members added for team {{team.teamName}} so far
             </div>        
             <ul ng-hide="!team.members.length">
                 <li ng-repeat="member in team.members">
-                    <span data-toggle="tooltip" tooltip-placement="bottom" uib-tooltip-template="'../common/components/teams/employee.tpl.html'">
-                        {{member.name}}
-                    </span>
+                    <div>
+                        <span data-toggle="tooltip" tooltip-placement="bottom" uib-tooltip-template="'../common/components/teams/employee.tpl.html'">
+                            {{member.name}}
+                        </span>
+                        <!--<span class="pull-right">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </span>-->
+                    </div>
                 </li>
             </ul>
         </div>
