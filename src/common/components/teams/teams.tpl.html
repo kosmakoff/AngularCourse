@@ -32,9 +32,11 @@
                         <span data-toggle="tooltip" tooltip-placement="bottom" uib-tooltip-template="'../common/components/teams/employee.tpl.html'">
                             {{member.name}}
                         </span>
-                        <!--<span class="pull-right">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </span>-->
+                        <span class="pull-right">
+                            <a href="" ng-click="removeMemberFromTeam(team, member)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        </span>
                     </div>
                 </li>
             </ul>

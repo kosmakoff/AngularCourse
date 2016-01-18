@@ -80,8 +80,8 @@ module.exports = function(grunt) {
                     '<%= buildDir %>/src/**/*.js'
                 ],
                 styles: [
-                    '<%= recess.vendor.dest %>',
-                    '<%= recess.app.dest %>'
+                    '<%= less.vendor.dest %>',
+                    '<%= less.app.dest %>'
                 ]
             },
             compile: {
@@ -164,9 +164,9 @@ module.exports = function(grunt) {
     /**
      * Lint and minify CSS and LESS
      */
-    grunt.loadNpmTasks('grunt-recess');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.extendConfig({
-        recess: {
+        less: {
             options: {
                 compile: true
             },
@@ -366,7 +366,7 @@ module.exports = function(grunt) {
             },
             styles: {
                 files: ['<%= frontend.src.less.app %>', '<%= frontend.src.less.common %>'],
-                tasks: ['recess'],
+                tasks: ['less'],
                 options: {
                     livereload: true
                 }
@@ -388,36 +388,6 @@ module.exports = function(grunt) {
             }
         }
     });
-
-
-    /**
-     * Http server for development
-     */
-//     grunt.loadNpmTasks('grunt-http-server');
-//     grunt.extendConfig({
-//         'http-server': {
-//             dev: {
-//                 root: './build',
-//                 port: 8080,
-//                 host: "localhost",
-//                 cache: 0,
-//                 showDir : true,
-//                 autoIndex: true,
-//                 // server default file extension
-//                 ext: "html",
-//                 // run in parallel with other tasks
-//                 runInBackground: true
-//             }
-//         }
-//     });
-// 
-//     grunt.extendConfig({
-//         'http-server': {
-//             prod: _.extend({}, grunt.config.get('http-server.dev'), {
-//                 runInBackground: false
-//             })
-//         }
-//     });
 
     grunt.loadNpmTasks('grunt-nodemon');
     grunt.extendConfig({
@@ -482,17 +452,13 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('build', [
-        'jshint', 'clean:build', 'copy', 'recess', 'html2js', 'pack:build'
+        'jshint', 'clean:build', 'copy', 'less', 'html2js', 'pack:build'
     ]);
 
     grunt.registerTask('compile', [
         'build', 'ngAnnotate', 'concat', 'uglify', 'cssmin', 'clean:compile', 'pack:compile'
     ]);
 
-    // grunt.registerTask('up', [
-    //     'build', 'http-server:dev', 'watch'
-    // ]);
-    
     grunt.registerTask('up', [
         'build', 'concurrent'
     ]);

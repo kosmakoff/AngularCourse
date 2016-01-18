@@ -2,7 +2,7 @@
 
 angular.module('awesome-app.common.components.teams').
 
-controller('TeamsCtrl', function($scope, $rootScope, $window, TeamMemberModel, TeamMemberCollection) {
+controller('TeamsCtrl', function($scope, $rootScope, $window, Teams, TeamMemberModel, TeamMemberCollection) {
     $scope.newTeamName = '';
     $scope.openTeam = null;
     
@@ -37,6 +37,10 @@ controller('TeamsCtrl', function($scope, $rootScope, $window, TeamMemberModel, T
             // emit event
             $scope.$emit('teamSelected', team);
         }
+    };
+    
+    $scope.removeMemberFromTeam = function (team, employee) {
+        Teams.removeMemberFromTeam(team, employee);
     };
     
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
