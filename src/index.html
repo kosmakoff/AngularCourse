@@ -36,7 +36,10 @@
 
 <div class="container">
     <div ng-controller="AlertController" ng-show="showAlert">
-        <uib-alert close="closeAlert()">Attention, crappy styling everywhere :(</uib-alert>
+        <uib-alert close="closeAlert()">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            Attention, crappy styling everywhere :(
+        </uib-alert>
     </div>
     <ui-view></ui-view>
 </div>
