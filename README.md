@@ -48,8 +48,8 @@ src/
 │ │ ├─teams/                            --> Teams Accordion-like control
 │ │ ├─teamTabs/                         --> Collection of controls for use in left pane
 │ │ └─version/                          --> Version user control
-│ ├─features/
-│ ├─filters/
+│ ├─features/                           --> Business objects
+│ ├─filters/                            --> Filters
 │ └─services/
 │   ├─employees/                        --> Service for accessing the Employees list
 │   └─teams/                            --> Service for accessing the Teams list
